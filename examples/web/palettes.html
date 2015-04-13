@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+<script src=irc-colorcode-render.js></script>
+<style>
+body { font: 10px monospace; }
+td { padding: 4px }
+</style>
+</head>
+<body>
+<div id=out></div>
+<script>
+
+var ps = colorcode.color.palettes
+var pnames = Object.keys(ps)
+pnames.unshift("#")
+
+
+var out = "<table><tr>"
+for (var i=0, pname; pname=pnames[i]; i++){
+  out += "<td>"+pname+"</td>"
+}
+out += "</tr>"
+
+
+for (var i=0; i<16; i++){
+  out += "<tr>"
+  for (var p=0, pname; pname=pnames[p]; p++){
+    if (pname === "#")
+      out += "<td>"+i+"</td>"
+    else {
+      var pal = ps[pname]
+      out += "<td style='background-color:"+pal[i]+"'>"+pal[i]+"</td>"
+    }
+  }
+  out += "</tr>"
+}
+
+out += "</table>"
+
+document.getElementById('out').innerHTML = out
+</script>
+</body>
+</html>

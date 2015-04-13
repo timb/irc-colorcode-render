@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta charset=utf-8>
+<title>irc format test</title>
+<link rel=stylesheet href=test.css>
+<script src="irc-colorcode-render.js"></script>
+</head>
+<body>
+
+<div id=ui>
+  <h1>irc format test</h1>
+  <textarea id=in_text></textarea>
+  <select id=in_palette></select>
+  <select id=in_font></select>
+</div>
+
+
+<div id=out>
+  <canvas id=canvas></canvas>
+</div>
+
+</body>
+<script>
+var in_text = document.querySelector('#in_text');
+var canvas = document.querySelector('#canvas');
+
+var in_palette = document.querySelector("#in_palette")
+var in_font = document.querySelector("#in_font")
+
+var palette = 'mirc'
+var font = 'fixedsys'
+
+var render = function(){
+  var start = Date.now();
+  colorcode.to_canvas(in_text.value, {canvas:canvas, palette:palette, font:font})
+  var total = Date.now() - start;
+  console.log("took " + total)
+}
+
+var make_form_options = function(keys, dom_select, default_value){
+  // var keys = Object.keys(obj)
+  for (var i=0, key; key=keys[i]; i++){
+    var option = document.createElement("option")
+    option.innerHTML = key
+    if (key === default_value) { option.setAttribute("selected", true) }
+    dom_select.appendChild(option)
+  }
+}
+
+var palette_names = Object.keys(colorcode.color.palettes);
+var font_names = Object.keys(colorcode.font.list);
+
+make_form_options(palette_names, in_palette, palette)
+make_form_options(font_names, in_font, font)
+
+in_palette.addEventListener("change", function(){
+  palette = palette_names[in_palette.selectedIndex]
+  render()
+})
+
+in_font.addEventListener("change", function(){
+  font = font_names[in_font.selectedIndex]
+  render()
+})
+
+in_text.addEventListener('input', render)
+
+if (in_text.value !== "") render();
+
+</script>
+</html>

@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+<meta charset=utf-8>
+<title>irc color code to json test</title>
+<link rel=stylesheet href=test.css>
+<script src="irc-colorcode-render.js"></script>
+</head>
+<body>
+
+<div id=ui>
+  <h1>irc color code to json test</h1>
+  <textarea id=in_text></textarea>
+</div>
+
+<div id=out>
+  <pre id=out_json></pre>
+</div>
+
+</body>
+<script>
+var init = function(){
+  var in_text = document.querySelector('#in_text');
+  var out_json = document.querySelector('#out_json');
+
+  in_text.addEventListener('input', function(){
+    var json = colorcode.to_json(in_text.value)
+    //console.log(data)
+    out_json.innerHTML = JSON.stringify(json, null, 2) 
+  })
+}
+init();
+</script>
+</html>
