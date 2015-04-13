@@ -449,13 +449,13 @@ var to_json = function(string, opts){
     "bg": ("bg" in opts) ? opts.bg : default_style.bg
   };
 
-  var lines_in = string.split("\n");
+  var lines_in = string.split(/\r?\n/);
   var data = [];
   var w = 0, h = 0;
 
   for (var i=0; i<lines_in.length; i++){
     var line = lines_in[i];
-    // if (line.length === 0) continue;
+    if (line.length === 0) continue;
     var json_line = line_to_json(line, base_style);
     if (w < json_line.length) w = json_line.length;
     data.push(json_line);
